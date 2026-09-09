@@ -6,7 +6,7 @@
 #### Retrieval Method
 #### Performance Analysis
 #### Design Decisions
-#### Ressources
 #### Challenges Faced
+### Ressources
 ### Instructions
 #### Example Usage
