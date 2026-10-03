@@ -205,6 +205,6 @@ clean:
 	@sleep 0.01
 	@printf "!\n"
 	@echo "${RED}Removing pycache..."
-	@rm -rf src/__pycache__
+	@py3clean . -v
 	@sleep 0.1
 	@echo "${GREEN}Successfully removed pycache."

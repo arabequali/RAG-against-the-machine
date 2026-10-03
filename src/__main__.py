@@ -83,5 +83,9 @@ def answer_dataset(student_search_results_path: str, save_directory: str) -> Non
     print(f"Saved student_search_results_and_answer to {out_path}")
 
 
+def evaluate() -> None:
+    print("Evaluation...")
+
+
 if __name__ == '__main__':
     fire.Fire()
