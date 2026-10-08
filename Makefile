@@ -1,210 +1,24 @@
-RED		=	\e[1;31m
-GREEN	=	\e[1;32m
+.PHONY: install run debug clean lint lint-strict
 
 install:
-	@printf "${GREEN}I"
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf t
-	@sleep 0.01
-	@printf a
-	@sleep 0.01
-	@printf l
-	@sleep 0.01
-	@printf l
-	@sleep 0.01
-	@printf i
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf g
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf d
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf p
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf d
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf i
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf w
-	@sleep 0.01
-	@printf i
-	@sleep 0.01
-	@printf t
-	@sleep 0.01
-	@printf h
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf u
-	@sleep 0.01
-	@printf v
-	@sleep 0.01
-	@printf .
-	@sleep 0.01
-	@printf .
-	@sleep 0.01
-	@printf ".\n"
-	@sleep 0.01
-	@uv sync
+	uv sync
+
+run:
+	uv run python -m src index --max_chunk_size 2000
+
+debug:
+	uv run python -m pdb -m src index --max_chunk_size 2000
 
 clean:
-	@printf "${RED}R"
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf m
-	@sleep 0.01
-	@printf o
-	@sleep 0.01
-	@printf v
-	@sleep 0.01
-	@printf i
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf g
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf p
-	@sleep 0.01
-	@printf r
-	@sleep 0.01
-	@printf o
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf d
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf h
-	@sleep 0.01
-	@printf u
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf k
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf .
-	@sleep 0.01
-	@printf .
-	@sleep 0.01
-	@printf ".\n"
-	@rm -f data/processed/chunks.pkl
-	@printf "${GREEN}S"
-	@sleep 0.01
-	@printf u
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf f
-	@sleep 0.01
-	@printf u
-	@sleep 0.01
-	@printf l
-	@sleep 0.01
-	@printf l
-	@sleep 0.01
-	@printf y
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf r
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf m
-	@sleep 0.01
-	@printf o
-	@sleep 0.01
-	@printf v
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf d
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf p
-	@sleep 0.01
-	@printf r
-	@sleep 0.01
-	@printf o
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf e
-	@sleep 0.01
-	@printf d
-	@sleep 0.01
-	@printf " "
-	@sleep 0.01
-	@printf c
-	@sleep 0.01
-	@printf h
-	@sleep 0.01
-	@printf u
-	@sleep 0.01
-	@printf n
-	@sleep 0.01
-	@printf k
-	@sleep 0.01
-	@printf s
-	@sleep 0.01
-	@printf "!\n"
-	@echo "${RED}Removing pycache..."
-	@py3clean . -v
-	@sleep 0.1
-	@echo "${GREEN}Successfully removed pycache."
+	find . -type d -name "__pycache__" -prune -exec rm -rf {} +
+	rm -rf .mypy_cache .pytest_cache
+
+lint:
+	-uv run python3 -m flake8 src/
+	-uv run python3 -m mypy src/ --warn-return-any --warn-unused-ignores \
+                --ignore-missing-imports --disallow-untyped-defs \
+                --check-untyped-defs
+
+lint-strict:
+	uv run flake8 src/
+	uv run mypy src/ --strict
