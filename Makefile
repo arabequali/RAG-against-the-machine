@@ -16,8 +16,8 @@ clean:
 lint:
 	-uv run python3 -m flake8 src/
 	-uv run python3 -m mypy src/ --warn-return-any --warn-unused-ignores \
-                --ignore-missing-imports --disallow-untyped-defs \
-                --check-untyped-defs
+		--ignore-missing-imports --disallow-untyped-defs \
+		--check-untyped-defs
 
 lint-strict:
 	uv run flake8 src/
